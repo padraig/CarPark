@@ -55,14 +55,10 @@ public class MenuBar extends JPanel {
                      If first space is occupied, place in space one.
                      Otherwise, place in next unoccupied space.
                      */
-                    
-                    if (!list.get(0).isOccupied()) {
-                        i = 0;
-                    } else {
-                        i++;
-                        while (list.get(i).isOccupied()) {
-                            i++;
-                        }
+                    if (newCar.isHighValue) {
+                        findNextEmpty(0,5,list);
+                        findNextEmpty(5,10,list);
+                        findNextEmpty(10,15,list);
                     }
 
                     //Add car
@@ -149,5 +145,19 @@ public class MenuBar extends JPanel {
             }
         }
         return copy;
+    }
+
+    private int findNextEmpty(int start,int end, LinkedList<ParkingSpace> list) {
+        int i;
+        for (i = start; i < end; i++) {
+            if (!list.get(0).isOccupied()) {
+                i = 0;
+            } else {
+                i++;
+                while (list.get(i).isOccupied()) {
+                    i++;
+                }
+            }
+        }return i;
     }
 }
