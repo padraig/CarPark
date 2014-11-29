@@ -56,10 +56,25 @@ public class MenuBar extends JPanel {
                      Otherwise, place in next unoccupied space.
                      */
                     if (newCar.isHighValue) {
-                        if()
-                        findNextEmpty(0,5,list);
-                        findNextEmpty(5,10,list);
-                        findNextEmpty(10,15,list);
+                        i = findNextEmpty(0, 5, list);
+
+                        if (i == -1) {
+                            i = findNextEmpty(10, 15, list);
+                        } else {
+                            i = findNextEmpty(5, 10, list);
+                        }
+                    } else if (newCar.isLarge) {
+                        if (list.get(5).isOccupied()) {
+                            i = 5;
+                        } else if (list.get(6).isOccupied()) {
+                            i = 6;
+                        } else if (list.get(7).isOccupied()) {
+                            i = 7;
+                        } else if(list.get(8).isOccupied()){
+                            i = 8;
+                        } else if(list.get(9).isOccupied()){
+                            i = 9;
+                        } else JOptionPane.showMessageDialog(new JFrame(), "No Suitable Spaces for Large Vehicles.");
                     }
 
                     //Add car
@@ -148,7 +163,7 @@ public class MenuBar extends JPanel {
         return copy;
     }
 
-    private int findNextEmpty(int start,int end, LinkedList<ParkingSpace> list) {
+    private int findNextEmpty(int start, int end, LinkedList<ParkingSpace> list) {
         int i;
         for (i = start; i < end; i++) {
             if (!list.get(0).isOccupied()) {
@@ -160,9 +175,11 @@ public class MenuBar extends JPanel {
                 }
             }
         }
-        
-        if(i == end){
+
+        if (i == end) {
             return -1;
-        }else return i;
+        } else {
+            return i;
+        }
     }
 }
