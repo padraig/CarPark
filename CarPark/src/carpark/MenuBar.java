@@ -56,6 +56,7 @@ public class MenuBar extends JPanel {
                      Otherwise, place in next unoccupied space.
                      */
                     if (newCar.isHighValue) {
+                        if()
                         findNextEmpty(0,5,list);
                         findNextEmpty(5,10,list);
                         findNextEmpty(10,15,list);
@@ -158,6 +159,10 @@ public class MenuBar extends JPanel {
                     i++;
                 }
             }
-        }return i;
+        }
+        
+        if(i == end){
+            return -1;
+        }else return i;
     }
 }
