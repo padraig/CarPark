@@ -84,7 +84,15 @@ public class MenuBar extends JPanel {
                         }
                         list.get(i).addCar(newCar);
                     } else {
-                        i = findNextEmpty(0, 14, list);
+                        i = findNextEmpty(10, 15, list);
+                        
+                        if (i == -1) {
+                            i = findNextEmpty(0, 5, list);
+                        }
+
+                        if (i == -1) {
+                            i = findNextEmpty(5, 10, list);
+                        }
                         list.get(i).addCar(newCar);
                     }
 
@@ -178,19 +186,14 @@ public class MenuBar extends JPanel {
     }
 
     private int findNextEmpty(int start, int end, LinkedList<ParkingSpace> list) {
-        int i;
-        for (i = start; i < end; i++) {
+        int i = start;
             if (!list.get(start).isOccupied()) {
                 i = start;
-                break;
             } else {
-                i++;
-                while (list.get(i).isOccupied()) {
+                while (i < end && list.get(i).isOccupied()) {
                     i++;
                 }
-                break;
             }
-        }
 
         if (i == end) {
             return -1;
