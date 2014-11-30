@@ -55,34 +55,36 @@ public class MenuBar extends JPanel {
                      If first space is occupied, place in space one.
                      Otherwise, place in next unoccupied space.
                      */
-                    if (newCar.isHighValue) {
+                    if (newCar.isLarge) {
+                        if (!list.get(5).isOccupied()) {
+                            i = 5;
+                        } else if (!list.get(6).isOccupied()) {
+                            i = 6;
+                        } else if (!list.get(7).isOccupied()) {
+                            i = 7;
+                        } else if (!list.get(8).isOccupied()) {
+                            i = 8;
+                        } else if (!list.get(9).isOccupied()) {
+                            i = 9;
+                        } else {
+                            JOptionPane.showMessageDialog(new JFrame(), "No Suitable Space for Large Vehicles.");
+                        }list.get(i).addCar(newCar);
+                    } else if (newCar.isHighValue) {
                         i = findNextEmpty(0, 5, list);
 
                         if (i == -1) {
                             i = findNextEmpty(10, 15, list);
-                        } else {
+                        } 
+                        
+                        if (i == -1) {
                             i = findNextEmpty(5, 10, list);
                         }
-                    } else if (newCar.isLarge) {
-                        if (list.get(5).isOccupied()) {
-                            i = 5;
-                        } else if (list.get(6).isOccupied()) {
-                            i = 6;
-                        } else if (list.get(7).isOccupied()) {
-                            i = 7;
-                        } else if (list.get(8).isOccupied()) {
-                            i = 8;
-                        } else if (list.get(9).isOccupied()) {
-                            i = 9;
-                        } else {
-                            JOptionPane.showMessageDialog(new JFrame(), "No Suitable Spaces for Large Vehicles.");
-                        }
+                        list.get(i).addCar(newCar);
                     } else {
                         i = findNextEmpty(0, 14, list);
+                        list.get(i).addCar(newCar);
                     }
-
-                    //Add car
-                    list.get(i).addCar(newCar);
+                    
 
                     //Enable search and remove buttons when one car has been added
                     searchCarButton.setEnabled(true);
@@ -110,14 +112,21 @@ public class MenuBar extends JPanel {
         };
 
         addCarButton.addActionListener(InsertCarListener);
+
         searchCarButton.addActionListener(FindCarListener);
+
         removeCarButton.addActionListener(RemoveCarListener);
 
         this.add(regBox);
+
         this.add(addCarButton);
+
         this.add(searchCarButton);
+
         this.add(removeCarButton);
+
         this.add(carValue);
+
         this.add(carSize);
     }
 
@@ -166,17 +175,20 @@ public class MenuBar extends JPanel {
         }
         return copy;
     }
-
+    
+    //
     private int findNextEmpty(int start, int end, LinkedList<ParkingSpace> list) {
         int i;
         for (i = start; i < end; i++) {
-            if (!list.get(0).isOccupied()) {
-                i = 0;
+            if (!list.get(start).isOccupied()) {
+                i = start;
+                break;
             } else {
                 i++;
                 while (list.get(i).isOccupied()) {
                     i++;
                 }
+                break;
             }
         }
 
