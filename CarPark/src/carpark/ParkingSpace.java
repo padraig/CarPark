@@ -5,7 +5,7 @@ import javax.swing.JPanel;
 
 /**
  * Manages an individual parking space.
- * @author Padraig
+ * @author B00639511
  */
 @SuppressWarnings("serial")
 public class ParkingSpace extends JPanel{

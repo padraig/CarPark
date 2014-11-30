@@ -10,7 +10,7 @@ import org.pushingpixels.trident.Timeline.RepeatBehavior;
 /**
  * Manages add, remove and search functions
  *
- * @author Padraig
+ * @author B00639511
  */
 public class MenuBar extends JPanel {
 

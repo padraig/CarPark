@@ -2,7 +2,7 @@ package carpark;
 
 /**
  * Stores details about an individual car.
- * @author Padraig
+ * @author B00639511
  */
 class Car {
     String registrationNumber = "";
