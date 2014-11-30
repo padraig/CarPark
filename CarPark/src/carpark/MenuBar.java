@@ -70,11 +70,15 @@ public class MenuBar extends JPanel {
                             i = 6;
                         } else if (list.get(7).isOccupied()) {
                             i = 7;
-                        } else if(list.get(8).isOccupied()){
+                        } else if (list.get(8).isOccupied()) {
                             i = 8;
-                        } else if(list.get(9).isOccupied()){
+                        } else if (list.get(9).isOccupied()) {
                             i = 9;
-                        } else JOptionPane.showMessageDialog(new JFrame(), "No Suitable Spaces for Large Vehicles.");
+                        } else {
+                            JOptionPane.showMessageDialog(new JFrame(), "No Suitable Spaces for Large Vehicles.");
+                        }
+                    } else {
+                        i = findNextEmpty(0, 14, list);
                     }
 
                     //Add car
