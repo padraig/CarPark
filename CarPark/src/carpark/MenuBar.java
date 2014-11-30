@@ -8,11 +8,16 @@ import javax.swing.*;
 import org.pushingpixels.trident.Timeline.RepeatBehavior;
 
 /**
+ * Manages add, remove and search functions
  *
  * @author Padraig
  */
 public class MenuBar extends JPanel {
 
+    /**
+     * Class constructor
+     * @param list list of parking spaces to be analyzed
+     */
     public MenuBar(LinkedList<ParkingSpace> list) {
         this.setLayout(new GridLayout(0, 6));
 
@@ -28,6 +33,10 @@ public class MenuBar extends JPanel {
         final JRadioButton carValue = new JRadioButton("High Value");
         final JRadioButton carSize = new JRadioButton("Large Car");
 
+        /**
+         * Searches list for a matching car and identifies it to the user if
+         * found by flashing between blue and red
+         */
         ActionListener FindCarListener = (ActionEvent e) -> {
             int i = getIndex(regBox.getText(), list);
 
@@ -42,10 +51,17 @@ public class MenuBar extends JPanel {
             }
         };
 
+        /**
+         * Analyzes list for a suitable parking space to place a new car and
+         * inserts it if possible.
+         */
         ActionListener InsertCarListener = (ActionEvent e) -> {
             Car newCar = new Car(regBox.getText());
             int i = 0;
 
+            /**
+             * If the car already exists, the user is alerted to this.
+             */
             if (!isDuplicate(regBox.getText(), list)) {
                 try {
 
@@ -57,6 +73,18 @@ public class MenuBar extends JPanel {
                         newCar.isLarge = true;
                     }
 
+                    /**
+                     * If a large car has been entered, it will be placed in one
+                     * of bays 6-10 only. If none of these spaces are empty the
+                     * car will be rejected.
+                     *
+                     * If the car is high value, it will first attempt to be
+                     * placed in bays 1-5, then bays 11-15, and finally bays
+                     * 6-10.
+                     *
+                     * Finally, any other car will be placed in bays 11-15, then
+                     * bays 1-5 and finally 6-10;
+                     */
                     if (newCar.isLarge) {
                         if (carCount(list) < 15) {
                             for (int listIndex = 5; listIndex <= 9; listIndex++) {
@@ -66,13 +94,12 @@ public class MenuBar extends JPanel {
                                 }
                             }
                         } else {
-                            i = -1;
+                            JOptionPane.showMessageDialog(new JFrame(), "No Suitable Spaces for Large Vehicles.");
                         }
 
+                        //car is only added if a suitable bay is free
                         if (i != 0) {
                             list.get(i).addCar(newCar);
-                        } else {
-                            JOptionPane.showMessageDialog(new JFrame(), "No Suitable Spaces for Large Vehicles.");
                         }
                     } else if (newCar.isHighValue) {
                         i = findNextEmpty(0, 5, list);
@@ -98,7 +125,7 @@ public class MenuBar extends JPanel {
                         list.get(i).addCar(newCar);
                     }
 
-                    //Enable search and remove buttons when one car has been added
+                    //Enable search button only when a car has been added
                     searchCarButton.setEnabled(true);
 
                 } catch (IndexOutOfBoundsException oob) {
@@ -109,6 +136,10 @@ public class MenuBar extends JPanel {
             }
         };
 
+        /**
+         * Searches list for a car matching the registration number in the text
+         * field and removes it if found.
+         */
         ActionListener RemoveCarListener = (ActionEvent e) -> {
             int i = getIndex(regBox.getText(), list);
 
@@ -116,31 +147,35 @@ public class MenuBar extends JPanel {
                 list.get(i).removeCar();
             }
 
+            //Disables search and remove buttons if there are no cars remaining
             if (carCount(list) == 0) {
                 searchCarButton.setEnabled(false);
                 removeCarButton.setEnabled(false);
             }
         };
 
+        //Add components to the jpanel
         addCarButton.addActionListener(InsertCarListener);
-
         searchCarButton.addActionListener(FindCarListener);
-
         removeCarButton.addActionListener(RemoveCarListener);
 
         this.add(regBox);
-
         this.add(addCarButton);
-
         this.add(searchCarButton);
-
         this.add(removeCarButton);
-
         this.add(carValue);
-
         this.add(carSize);
     }
 
+    /**
+     * Searches the list of parking spaces for a car matching the registration
+     * number. If the car is found the index of the space is returned. Otherwise
+     * this method will return -1;
+     *
+     * @param reg the registration number of the car being looked for
+     * @param list the list of parking spaces being analyzed
+     * @return index of the parking space in which the car has been found
+     */
     private int getIndex(String reg, LinkedList<ParkingSpace> list) {
         int i = 0;
         boolean found = false;
@@ -160,6 +195,11 @@ public class MenuBar extends JPanel {
         return i;
     }
 
+    /**
+     *
+     * @param list the list of parking spaces being analyzed
+     * @return number of cars in the car park
+     */
     private int carCount(LinkedList<ParkingSpace> list) {
         int count = 0;
 
@@ -171,6 +211,14 @@ public class MenuBar extends JPanel {
         return count;
     }
 
+    /**
+     * Returns true if a car matching the specified registration number is found
+     * in the list of parking spaces.
+     *
+     * @param reg the registration number of the car being looked for
+     * @param list the list of parking spaces being analyzed
+     * @return whether or not the car already exists
+     */
     private boolean isDuplicate(String reg, LinkedList<ParkingSpace> list) {
         boolean copy = false;
         if (carCount(list) > 0) {
@@ -187,6 +235,15 @@ public class MenuBar extends JPanel {
         return copy;
     }
 
+    /**
+     * Searches the list of parking spaces within a specified range to find the
+     * first unoccupied parking space. If no space is found, returns -1;
+     *
+     * @param start the first space to be searched
+     * @param end the final space to searched
+     * @param list the list of parking spaces being analyzed
+     * @return index of the first empty parking space within the specified range
+     */
     private int findNextEmpty(int start, int end, LinkedList<ParkingSpace> list) {
         int i = start;
         if (!list.get(start).isOccupied()) {

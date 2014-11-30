@@ -1,19 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package carpark;
 
 /**
- *
+ * Stores details about an individual car.
  * @author Padraig
  */
 class Car {
     String registrationNumber = "";
     boolean isLarge = false;
     boolean isHighValue = false;
-    
+    /**
+     * Constructor for new car, specifying the car registration number.
+     * @param registrationNumber the registration number of the new car 
+     */
     public Car(String registrationNumber){
         this.registrationNumber = registrationNumber;
     }
