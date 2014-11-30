@@ -106,7 +106,7 @@ public class MenuBar extends JPanel {
                 list.get(i).removeCar();
             }
 
-            if (carCount(list) < 0) {
+            if (carCount(list) == 0) {
                 searchCarButton.setEnabled(false);
                 removeCarButton.setEnabled(false);
             }
