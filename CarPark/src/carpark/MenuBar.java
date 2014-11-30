@@ -35,7 +35,7 @@ public class MenuBar extends JPanel {
                 final Timeline timeline = new Timeline(list.get(i));
                 timeline.addPropertyToInterpolate("background", list.get(i).getBackground(), Color.BLUE);
                 timeline.setDuration(1000);
-                timeline.playLoop(4, RepeatBehavior.REVERSE);
+                timeline.playLoop(2, RepeatBehavior.REVERSE);
                 removeCarButton.setEnabled(true);
             } else {
                 JOptionPane.showMessageDialog(new JFrame(), "Car not found");
