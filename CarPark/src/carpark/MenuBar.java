@@ -35,7 +35,7 @@ public class MenuBar extends JPanel {
                 final Timeline timeline = new Timeline(list.get(i));
                 timeline.addPropertyToInterpolate("background", list.get(i).getBackground(),Color.BLUE);
                 timeline.setDuration(1000);
-                timeline.playLoop(5,RepeatBehavior.REVERSE);
+                timeline.playLoop(4,RepeatBehavior.REVERSE);
             } else {
                 JOptionPane.showMessageDialog(new JFrame(), "Car not found");
             }
@@ -47,7 +47,7 @@ public class MenuBar extends JPanel {
 
             if (!isDuplicate(regBox.getText(), list)) {
                 try {
-                    //Set extra properties
+                    
                     if (carValue.isSelected()) {
                         newCar.isHighValue = true;
                     }
@@ -55,11 +55,7 @@ public class MenuBar extends JPanel {
                     if (carSize.isSelected()) {
                         newCar.isLarge = true;
                     }
-
-                    /*
-                     If first space is occupied, place in space one.
-                     Otherwise, place in next unoccupied space.
-                     */
+                    
                     if (newCar.isLarge) {
                         if (!list.get(5).isOccupied()) {
                             i = 5;
