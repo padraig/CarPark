@@ -58,20 +58,22 @@ public class MenuBar extends JPanel {
                     }
 
                     if (newCar.isLarge) {
-                        if (!list.get(5).isOccupied()) {
-                            i = 5;
-                        } else if (!list.get(6).isOccupied()) {
-                            i = 6;
-                        } else if (!list.get(7).isOccupied()) {
-                            i = 7;
-                        } else if (!list.get(8).isOccupied()) {
-                            i = 8;
-                        } else if (!list.get(9).isOccupied()) {
-                            i = 9;
+                        if (carCount(list) < 15) {
+                            for (int listIndex = 5; listIndex <= 9; listIndex++) {
+                                if (!list.get(listIndex).isOccupied()) {
+                                    i = listIndex;
+                                    break;
+                                }
+                            }
                         } else {
-                            JOptionPane.showMessageDialog(new JFrame(), "No Suitable Space for Large Vehicles.");
+                            i = -1;
                         }
-                        list.get(i).addCar(newCar);
+
+                        if (i != 0) {
+                            list.get(i).addCar(newCar);
+                        } else {
+                            JOptionPane.showMessageDialog(new JFrame(), "No Suitable Spaces for Large Vehicles.");
+                        }
                     } else if (newCar.isHighValue) {
                         i = findNextEmpty(0, 5, list);
 
@@ -85,7 +87,7 @@ public class MenuBar extends JPanel {
                         list.get(i).addCar(newCar);
                     } else {
                         i = findNextEmpty(10, 15, list);
-                        
+
                         if (i == -1) {
                             i = findNextEmpty(0, 5, list);
                         }
@@ -187,13 +189,13 @@ public class MenuBar extends JPanel {
 
     private int findNextEmpty(int start, int end, LinkedList<ParkingSpace> list) {
         int i = start;
-            if (!list.get(start).isOccupied()) {
-                i = start;
-            } else {
-                while (i < end && list.get(i).isOccupied()) {
-                    i++;
-                }
+        if (!list.get(start).isOccupied()) {
+            i = start;
+        } else {
+            while (i < end && list.get(i).isOccupied()) {
+                i++;
             }
+        }
 
         if (i == end) {
             return -1;
