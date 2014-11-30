@@ -3,7 +3,9 @@ package carpark;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.LinkedList;
+import org.pushingpixels.trident.Timeline;
 import javax.swing.*;
+import org.pushingpixels.trident.Timeline.RepeatBehavior;
 
 /**
  *
@@ -30,7 +32,10 @@ public class MenuBar extends JPanel {
             int i = getIndex(regBox.getText(), list);
 
             if (i != -1) {
-                list.get(i).setBackground(Color.BLUE);
+                final Timeline timeline = new Timeline(list.get(i));
+                timeline.addPropertyToInterpolate("background", list.get(i).getBackground(),Color.BLUE);
+                timeline.setDuration(1000);
+                timeline.playLoop(5,RepeatBehavior.REVERSE);
             } else {
                 JOptionPane.showMessageDialog(new JFrame(), "Car not found");
             }
@@ -176,7 +181,6 @@ public class MenuBar extends JPanel {
         return copy;
     }
     
-    //
     private int findNextEmpty(int start, int end, LinkedList<ParkingSpace> list) {
         int i;
         for (i = start; i < end; i++) {
