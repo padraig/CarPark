@@ -33,9 +33,10 @@ public class MenuBar extends JPanel {
 
             if (i != -1) {
                 final Timeline timeline = new Timeline(list.get(i));
-                timeline.addPropertyToInterpolate("background", list.get(i).getBackground(),Color.BLUE);
+                timeline.addPropertyToInterpolate("background", list.get(i).getBackground(), Color.BLUE);
                 timeline.setDuration(1000);
-                timeline.playLoop(4,RepeatBehavior.REVERSE);
+                timeline.playLoop(4, RepeatBehavior.REVERSE);
+                removeCarButton.setEnabled(true);
             } else {
                 JOptionPane.showMessageDialog(new JFrame(), "Car not found");
             }
@@ -47,7 +48,7 @@ public class MenuBar extends JPanel {
 
             if (!isDuplicate(regBox.getText(), list)) {
                 try {
-                    
+
                     if (carValue.isSelected()) {
                         newCar.isHighValue = true;
                     }
@@ -55,7 +56,7 @@ public class MenuBar extends JPanel {
                     if (carSize.isSelected()) {
                         newCar.isLarge = true;
                     }
-                    
+
                     if (newCar.isLarge) {
                         if (!list.get(5).isOccupied()) {
                             i = 5;
@@ -69,14 +70,15 @@ public class MenuBar extends JPanel {
                             i = 9;
                         } else {
                             JOptionPane.showMessageDialog(new JFrame(), "No Suitable Space for Large Vehicles.");
-                        }list.get(i).addCar(newCar);
+                        }
+                        list.get(i).addCar(newCar);
                     } else if (newCar.isHighValue) {
                         i = findNextEmpty(0, 5, list);
 
                         if (i == -1) {
                             i = findNextEmpty(10, 15, list);
-                        } 
-                        
+                        }
+
                         if (i == -1) {
                             i = findNextEmpty(5, 10, list);
                         }
@@ -85,11 +87,9 @@ public class MenuBar extends JPanel {
                         i = findNextEmpty(0, 14, list);
                         list.get(i).addCar(newCar);
                     }
-                    
 
                     //Enable search and remove buttons when one car has been added
                     searchCarButton.setEnabled(true);
-                    removeCarButton.setEnabled(true);
 
                 } catch (IndexOutOfBoundsException oob) {
                     JOptionPane.showMessageDialog(new JFrame(), "Car Park Full.");
@@ -137,7 +137,7 @@ public class MenuBar extends JPanel {
 
         while (i < 15) {
             if (list.get(i).isOccupied()) {
-                if (list.get(i).thisCar.registrationNumber.equals(reg)) {
+                if (list.get(i).thisCar.registrationNumber.equalsIgnoreCase(reg)) {
                     found = true;
                     break;
                 }
@@ -166,7 +166,7 @@ public class MenuBar extends JPanel {
         if (carCount(list) > 0) {
             for (ParkingSpace space : list) {
                 if (space.isOccupied()) {
-                    copy = space.thisCar.registrationNumber.equals(reg);
+                    copy = space.thisCar.registrationNumber.equalsIgnoreCase(reg);
 
                     if (copy == true) {
                         break;
@@ -176,7 +176,7 @@ public class MenuBar extends JPanel {
         }
         return copy;
     }
-    
+
     private int findNextEmpty(int start, int end, LinkedList<ParkingSpace> list) {
         int i;
         for (i = start; i < end; i++) {
