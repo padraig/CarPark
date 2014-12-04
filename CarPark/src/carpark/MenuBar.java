@@ -1,5 +1,7 @@
 package carpark;
 
+import carpark.Car;
+import carpark.ParkingSpace;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.LinkedList;
@@ -32,7 +34,7 @@ public class MenuBar extends JPanel {
 
         final JRadioButton carValue = new JRadioButton("High Value");
         final JRadioButton carSize = new JRadioButton("Large Car");
-
+        final JLabel count = new JLabel("Car Count: " + carCount(list));
         /**
          * Searches list for a matching car and identifies it to the user if
          * found by flashing between blue and red
@@ -124,7 +126,7 @@ public class MenuBar extends JPanel {
                         }
                         list.get(i).addCar(newCar);
                     }
-
+                    count.setText("Car Count: " + carCount(list));
                     //Enable search button only when a car has been added
                     searchCarButton.setEnabled(true);
 
@@ -145,13 +147,15 @@ public class MenuBar extends JPanel {
 
             if (i != -1) {
                 list.get(i).removeCar();
+                count.setText("Car Count: " + carCount(list));
+                removeCarButton.setEnabled(false);
             }
 
             //Disables search and remove buttons if there are no cars remaining
             if (carCount(list) == 0) {
                 searchCarButton.setEnabled(false);
-                removeCarButton.setEnabled(false);
             }
+            
         };
 
         //Add components to the jpanel
@@ -165,6 +169,7 @@ public class MenuBar extends JPanel {
         this.add(removeCarButton);
         this.add(carValue);
         this.add(carSize);
+        this.add(count);
     }
 
     /**
