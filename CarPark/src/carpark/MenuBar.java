@@ -19,7 +19,6 @@ public class MenuBar extends JPanel {
     private JButton removeCarButton = new JButton("Remove Car");
     private JRadioButton carValue = new JRadioButton("High Value");
     private JRadioButton carSize = new JRadioButton("Large Car");
-    private final JPanel countPane = new JPanel();
 
     public MenuBar(LinkedList<ParkingSpace> list) {
         this.setLayout(new GridLayout(0, 6));
@@ -36,7 +35,7 @@ public class MenuBar extends JPanel {
                 final Timeline timeline = new Timeline(list.get(i));
                 timeline.addPropertyToInterpolate("background", list.get(i).getBackground(), Color.BLUE);
                 timeline.setDuration(1000);
-                timeline.playLoop(5, RepeatBehavior.REVERSE);
+                timeline.playLoop(4, RepeatBehavior.REVERSE);
                 removeCarButton.setEnabled(true);
             } else {
                 JOptionPane.showMessageDialog(new JFrame(), "Car not found");
@@ -68,8 +67,8 @@ public class MenuBar extends JPanel {
                     } else {
                         JOptionPane.showMessageDialog(new JFrame(), "Car already entered.");
                     }
-                }else{
-                    JOptionPane.showMessageDialog(new JFrame(),"No registration number entered.");
+                } else {
+                    JOptionPane.showMessageDialog(new JFrame(), "No registration number entered.");
                 }
             } else {
                 JOptionPane.showMessageDialog(new JFrame(), "Car Park Full.");
@@ -80,6 +79,7 @@ public class MenuBar extends JPanel {
             int i = getIndex(regBox.getText(), list);
             if (i != -1) {
                 list.get(i).removeCar();
+                count.setText("Car Count: " + carCount(list));
             }
 
             if (carCount(list) == 0) {
