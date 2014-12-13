@@ -7,25 +7,24 @@ import javax.swing.JPanel;
  *
  * @author Padraig
  */
-@SuppressWarnings("serial")
-public class ParkingSpace extends JPanel{
-    String value;
+
+public class ParkingSpace extends JPanel {
     Car thisCar;
-    
-    public ParkingSpace(){
+
+    public ParkingSpace() {
         this.setBackground(Color.GREEN);
     }
-    
-    public boolean isOccupied(){
+
+    public boolean isOccupied() {
         return (thisCar != null);
     }
-    
-    public void addCar(Car newCar){
+
+    public void addCar(Car newCar) {
         thisCar = newCar;
         this.setBackground(Color.RED);
     }
-    
-    public void removeCar(){
+
+    public void removeCar() {
         thisCar = null;
         this.setBackground(Color.GREEN);
     }
