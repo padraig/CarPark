@@ -1,15 +1,19 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package carpark;
 
 import java.util.LinkedList;
 
 /**
- * Stores details about an individual car.
- * @author B00639511
+ *
+ * @author Padraig
  */
 public class Car {
 
     String registrationNumber = "";
-<<<<<<< HEAD
 
     public Car(String regNum) {
         this.registrationNumber = regNum;
@@ -51,15 +55,5 @@ public class Car {
         } else {
             return i;
         }
-=======
-    boolean isLarge = false;
-    boolean isHighValue = false;
-    /**
-     * Constructor for new car, specifying the car registration number.
-     * @param registrationNumber the registration number of the new car 
-     */
-    public Car(String registrationNumber){
-        this.registrationNumber = registrationNumber;
->>>>>>> f7627d62893fe04a9b128bb90477c1db6781b96f
     }
 }
